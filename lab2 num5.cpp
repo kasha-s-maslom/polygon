@@ -6,13 +6,13 @@
 
 std::vector<int> counter(const std::string arr[], const int size){  //функция, считающая количество повторений элемента в списке
 
-    std::vector<int> out(size, 0); //O(N)
+    std::vector<int> out(size, 0); //O(N), 24 + size * 4 байта
 
-    std::unordered_map<std::string, int> quantities_map; //O(1)
+    std::unordered_map<std::string, int> quantities_map; //O(1), 56 байт
 
     for(int i = 0; i < size; i++){ //O(N)
 
-        std::string word = arr[i]; //O(1+1+1) * O(N)
+        std::string word = arr[i]; //O(1+1+1) * O(N), 4 байта
 
         if (quantities_map.find(word) == quantities_map.end()){ //O(1+1+1)
 
@@ -46,7 +46,7 @@ int main(){
     for (int i = 0; i < res_matrix.size(); i++) { //O(N), печатаем вектор
         std::cout << " " << res_matrix[i];
     }
-
+    
     return 0;
 }
-
+// total memory: 24 + size*4 + 56 + 4 = 84 + size*4 байтов

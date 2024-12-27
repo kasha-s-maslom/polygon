@@ -1,8 +1,8 @@
 #include <iostream>
-#include <unordered_map>
+#include <map>
 #include <string>
 #include <vector>
-
+/*
 std::vector<std::pair<char, int>> reducer(std::string fullLine){ //функция подсчёта количества одинаковых символов последовательности
 
     std::vector<std::pair <char, int>> counter;
@@ -27,16 +27,60 @@ std::vector<std::pair<char, int>> reducer(std::string fullLine){ //функци�
     return counter;
 
 }
+*/
+
+char get_key(std::map<char, int> new_map, int k){
+    
+    for(auto i = new_map.begin(); i != new_map.end(); i++){
+        if (k == new_map[i->first]){
+            return i->first;
+        }
+    }
+
+    return '*';
+
+}
+
+std::string reducer(std::string fullLine){
+    std::map<char, int> chars;
+    std::string out;
+    
+    for(int i = 0; i < fullLine.size() - 1; i ++){ 
+        if(i + 1 != fullLine.size()){
+            if(chars[fullLine[i]] == 0){
+                chars[fullLine[i]]++;
+            }
+            else if(chars[fullLine[i]] != 0 && fullLine[i] == fullLine[i+1]){
+                chars[fullLine[i]] ++;
+            }
+            else if(chars[fullLine[i]] != 0 && fullLine[i] != fullLine[i+1]){
+                chars[fullLine[i]] ++;
+                std::cout << fullLine[i] << chars[fullLine[i]];
+                chars[fullLine[i]] = 0;
+            }
+        }
+        else if(i + 1 == fullLine.size()){
+            if(chars[fullLine[i]] == 0){
+                std::cout << fullLine[i] << '1';
+            }
+            else if(chars[fullLine[i]] != 0 && fullLine[i] == fullLine[i+1]){
+                chars[fullLine[i]] ++;
+                std::cout << fullLine[i] << chars[fullLine[i]];
+            }
+            else if(chars[fullLine[i]] != 0 && fullLine[i] != fullLine[i+1]){
+                chars[fullLine[i]] ++;
+                std::cout << fullLine[i] << chars[fullLine[i]];
+                std::cout << fullLine[i+1] << '1';
+            }
+        }
+    }
+    return out;
+}
 
 int main(){
 
-    std::string word = "aaabbaaaaccbbd";//O(1+1+1)
-    auto result = reducer(word);//O(1+1+1)
-
-    for (int i = 0; i < result.size(); i++) { //O(N), печатаем вектор
-        std::cout << result[i].first << result[i].second;
-    }
-
-    return 0;
-
+    std::string word = "aaabbc";//O(1+1+1)
+    std::string result = reducer(word);//O(1+1+1)
+    std::cout << result;
+    
 }
